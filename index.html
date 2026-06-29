@@ -1,27 +1,162 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Spanish Project</title>
 
-    <link rel="stylesheet" href="styles.css">
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Wine Language Dictionary</title>
+
+    <link rel="stylesheet"
+          href="styles.css">
+
 </head>
+
 <body>
 
     <header>
-        <h1>This is your page with a link!</h1>
+
+        <div class="headerContent">
+
+            <h1>🍷 Wine Language Dictionary</h1>
+
+            <p>
+                Search professional wine making terminology in
+                English, Spanish, and French.
+            </p>
+
+        </div>
+
     </header>
 
     <main>
-        <p>
-            <a href="https://www.google.com" target="_blank">
-                Click Here
-            </a>
-        </p>
+
+        <section class="searchCard">
+
+            <h2>Search</h2>
+
+            <input
+                id="searchInput"
+                type="text"
+                placeholder="Search any language...">
+
+            <button id="clearButton">
+                Clear Search
+            </button>
+
+            <p id="resultCount"></p>
+
+        </section>
+
+        <section
+            id="resultsSection"
+            class="tableCard">
+
+            <h2>Search Results</h2>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>English</th>
+
+                        <th>Spanish</th>
+
+                        <th>French</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="resultsBody">
+
+                </tbody>
+
+            </table>
+
+            <p id="noResults">
+
+                No matching terms found.
+
+            </p>
+
+        </section>
+
+        <section class="tableCard">
+
+            <div class="tableHeader">
+
+                <h2>Complete Dictionary</h2>
+
+                <button id="sortButton">
+
+                    Sort A → Z
+
+                </button>
+
+            </div>
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>English</th>
+
+                        <th>Spanish</th>
+
+                        <th>French</th>
+
+                    </tr>
+
+                </thead>
+
+                <tbody id="dictionaryBody">
+
+                </tbody>
+
+            </table>
+
+        </section>
+
     </main>
+
+    <button
+        id="topButton"
+        title="Back to top">
+
+        ↑
+
+    </button>
+
+    <footer>
+
+        <p>
+
+            Wine Language Dictionary
+
+        </p>
+
+        <p id="footerCount">
+
+        </p>
+
+    </footer>
+
+    <!-- Dictionary Data -->
+
+    <script src="wineTerms.js"></script>
+
+    <!-- Site Logic -->
 
     <script src="script.js"></script>
 
 </body>
+
 </html>
