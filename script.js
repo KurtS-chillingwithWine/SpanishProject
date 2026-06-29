@@ -8,48 +8,69 @@ const resultsBody = document.getElementById("resultsBody");
 const dictionaryBody = document.getElementById("dictionaryBody");
 const resultsSection = document.getElementById("resultsSection");
 const noResults = document.getElementById("noResults");
+
 const resultCount = document.getElementById("resultCount");
 const footerCount = document.getElementById("footerCount");
+
 const clearButton = document.getElementById("clearButton");
-const sortButton = document.getElementById("sortButton");
+
+const dictionaryTab = document.getElementById("dictionaryTab");
+const flashcardTab = document.getElementById("flashcardTab");
+
+const dictionaryMode = document.getElementById("dictionaryMode");
+const flashcardMode = document.getElementById("flashcardMode");
+
+const flashcard = document.getElementById("flashcard");
+
+const flashFront = document.getElementById("flashFront");
+const flashBack = document.getElementById("flashBack");
+
+const prevCard = document.getElementById("prevCard");
+const nextCard = document.getElementById("nextCard");
+const flipCard = document.getElementById("flipCard");
+
+const cardCounter = document.getElementById("cardCounter");
+
 const topButton = document.getElementById("topButton");
 
 /* ============================= */
 /* State */
 /* ============================= */
 
-let isSorted = false;
+let index = 0;
 
 /* ============================= */
-/* Helpers */
+/* Init */
 /* ============================= */
 
-function highlight(text, query) {
+function init() {
 
-    if (!query) return text;
+    buildTable(wineTerms, dictionaryBody);
 
-    const regex = new RegExp(`(${query})`, "gi");
+    footerCount.textContent = `Total terms: ${wineTerms.length}`;
 
-    return text.replace(regex, `<mark>$1</mark>`);
+    loadCard();
 
 }
 
-function buildTable(data, container, query = "") {
+init();
+
+/* ============================= */
+/* Table Builder */
+/* ============================= */
+
+function buildTable(data, container) {
 
     container.innerHTML = "";
 
-    data.forEach(term => {
+    data.forEach(t => {
 
         const row = document.createElement("tr");
 
         row.innerHTML = `
-
-            <td>${highlight(term.english, query)}</td>
-
-            <td>${highlight(term.spanish, query)}</td>
-
-            <td>${highlight(term.french, query)}</td>
-
+            <td>${t.english}</td>
+            <td>${t.spanish}</td>
+            <td>${t.french}</td>
         `;
 
         container.appendChild(row);
@@ -59,147 +80,152 @@ function buildTable(data, container, query = "") {
 }
 
 /* ============================= */
-/* Initial Load */
-/* ============================= */
-
-function init() {
-
-    buildTable(wineTerms, dictionaryBody);
-
-    footerCount.textContent = `Total terms: ${wineTerms.length}`;
-
-}
-
-init();
-
-/* ============================= */
 /* Search */
 /* ============================= */
 
-searchInput.addEventListener("input", function () {
+searchInput.addEventListener("input", () => {
 
-    const query = this.value.trim().toLowerCase();
+    const q = searchInput.value.toLowerCase();
 
-    if (!query) {
+    if (!q) {
 
         resultsSection.style.display = "none";
-
         resultCount.textContent = "";
-
         return;
 
     }
 
-    const matches = wineTerms.filter(term =>
-
-        term.english.toLowerCase().includes(query) ||
-
-        term.spanish.toLowerCase().includes(query) ||
-
-        term.french.toLowerCase().includes(query)
-
+    const matches = wineTerms.filter(t =>
+        t.english.toLowerCase().includes(q) ||
+        t.spanish.toLowerCase().includes(q) ||
+        t.french.toLowerCase().includes(q)
     );
 
     resultsSection.style.display = "block";
 
-    resultCount.textContent = `${matches.length} result(s) found`;
+    resultCount.textContent = `${matches.length} results`;
 
-    if (matches.length === 0) {
+    if (!matches.length) {
 
         resultsBody.innerHTML = "";
-
         noResults.style.display = "block";
 
     } else {
 
         noResults.style.display = "none";
-
-        buildTable(matches, resultsBody, query);
+        buildTable(matches, resultsBody);
 
     }
 
 });
 
 /* ============================= */
-/* Clear Search */
+/* Clear */
 /* ============================= */
 
-clearButton.addEventListener("click", function () {
+clearButton.addEventListener("click", () => {
 
     searchInput.value = "";
-
     resultsSection.style.display = "none";
-
     resultCount.textContent = "";
 
 });
 
 /* ============================= */
-/* Sort A → Z */
+/* Tabs */
 /* ============================= */
 
-sortButton.addEventListener("click", function () {
+dictionaryTab.onclick = () => {
 
-    isSorted = !isSorted;
+    dictionaryMode.style.display = "block";
+    flashcardMode.style.display = "none";
 
-    const sorted = [...wineTerms].sort((a, b) => {
+    dictionaryTab.classList.add("activeTab");
+    flashcardTab.classList.remove("activeTab");
 
-        return a.english.localeCompare(b.english);
+};
 
-    });
+flashcardTab.onclick = () => {
 
-    buildTable(isSorted ? sorted : wineTerms, dictionaryBody);
+    dictionaryMode.style.display = "none";
+    flashcardMode.style.display = "block";
 
-    sortButton.textContent = isSorted ? "Original Order" : "Sort A → Z";
+    flashcardTab.classList.add("activeTab");
+    dictionaryTab.classList.remove("activeTab");
 
-});
+    loadCard();
 
-/* ============================= */
-/* Back to Top Button */
-/* ============================= */
-
-window.addEventListener("scroll", function () {
-
-    if (window.scrollY > 300) {
-
-        topButton.style.display = "block";
-
-    } else {
-
-        topButton.style.display = "none";
-
-    }
-
-});
-
-topButton.addEventListener("click", function () {
-
-    window.scrollTo({
-
-        top: 0,
-
-        behavior: "smooth"
-
-    });
-
-});
+};
 
 /* ============================= */
-/* Row click behavior */
+/* Flashcards */
 /* ============================= */
 
-document.addEventListener("click", function (e) {
+function loadCard() {
 
-    const row = e.target.closest("tr");
+    const t = wineTerms[index];
 
-    if (!row || !row.children.length) return;
+    flashFront.innerHTML = `<h2>${t.english}</h2>`;
 
-    const text = Array.from(row.children)
+    flashBack.innerHTML = `
+        <p><strong>Spanish:</strong> ${t.spanish}</p>
+        <p><strong>French:</strong> ${t.french}</p>
+        <p><strong>Category:</strong> ${t.category}</p>
+    `;
 
-        .map(td => td.innerText)
+    cardCounter.textContent = `${index + 1} / ${wineTerms.length}`;
 
-        .join(" | ");
+}
 
-    navigator.clipboard.writeText(text);
+/* Flip */
 
-});
+flashcard.onclick = () => {
+
+    flashcard.classList.toggle("flipped");
+
+};
+
+/* Next */
+
+nextCard.onclick = () => {
+
+    index = (index + 1) % wineTerms.length;
+    flashcard.classList.remove("flipped");
+    loadCard();
+
+};
+
+/* Prev */
+
+prevCard.onclick = () => {
+
+    index = (index - 1 + wineTerms.length) % wineTerms.length;
+    flashcard.classList.remove("flipped");
+    loadCard();
+
+};
+
+/* Flip button */
+
+flipCard.onclick = () => {
+
+    flashcard.classList.toggle("flipped");
+
+};
+
+/* ============================= */
+/* Top Button */
+/* ============================= */
+
+window.onscroll = () => {
+
+    topButton.style.display =
+        window.scrollY > 300 ? "block" : "none";
+
+};
+
+topButton.onclick = () => {
+
+    window.scrollTo({ top: 0, behavior: "smooth" });
+
+};

@@ -5,55 +5,57 @@
 
     <meta charset="UTF-8">
 
-    <meta name="viewport"
-          content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Wine Language Dictionary</title>
+    <title>Wine Language App</title>
 
-    <link rel="stylesheet"
-          href="styles.css">
+    <link rel="stylesheet" href="styles.css">
 
 </head>
 
 <body>
 
-    <header>
+<header>
 
-        <div class="headerContent">
+    <div class="headerContent">
 
-            <h1>🍷 Wine Language Dictionary</h1>
+        <h1>Wine Language App</h1>
 
-            <p>
-                Search professional wine making terminology in
-                English, Spanish, and French.
-            </p>
+        <p>Learn wine terminology in English, Spanish, and French</p>
 
-        </div>
+    </div>
 
-    </header>
+</header>
 
-    <main>
+<main>
 
-        <section class="searchCard">
+    <!-- Tabs -->
 
-            <h2>Search</h2>
+    <div class="tabBar">
 
-            <input
-                id="searchInput"
-                type="text"
-                placeholder="Search any language...">
+        <button id="dictionaryTab" class="activeTab">Dictionary</button>
 
-            <button id="clearButton">
-                Clear Search
-            </button>
+        <button id="flashcardTab">Flashcards</button>
+
+    </div>
+
+    <!-- Dictionary Mode -->
+
+    <section id="dictionaryMode">
+
+        <div class="searchCard">
+
+            <h2>Search Terms</h2>
+
+            <input id="searchInput" type="text" placeholder="Search all languages">
+
+            <button id="clearButton">Clear</button>
 
             <p id="resultCount"></p>
 
-        </section>
+        </div>
 
-        <section
-            id="resultsSection"
-            class="tableCard">
+        <section id="resultsSection" class="tableCard">
 
             <h2>Search Results</h2>
 
@@ -73,33 +75,17 @@
 
                 </thead>
 
-                <tbody id="resultsBody">
-
-                </tbody>
+                <tbody id="resultsBody"></tbody>
 
             </table>
 
-            <p id="noResults">
-
-                No matching terms found.
-
-            </p>
+            <p id="noResults">No matches found</p>
 
         </section>
 
         <section class="tableCard">
 
-            <div class="tableHeader">
-
-                <h2>Complete Dictionary</h2>
-
-                <button id="sortButton">
-
-                    Sort A → Z
-
-                </button>
-
-            </div>
+            <h2>All Terms</h2>
 
             <table>
 
@@ -117,45 +103,62 @@
 
                 </thead>
 
-                <tbody id="dictionaryBody">
-
-                </tbody>
+                <tbody id="dictionaryBody"></tbody>
 
             </table>
 
         </section>
 
-    </main>
+    </section>
 
-    <button
-        id="topButton"
-        title="Back to top">
+    <!-- Flashcard Mode -->
 
-        ↑
+    <section id="flashcardMode" style="display:none;">
 
-    </button>
+        <div class="flashcardWrapper">
 
-    <footer>
+            <div id="flashcard" class="flashcard">
 
-        <p>
+                <div class="flashcardInner">
 
-            Wine Language Dictionary
+                    <div class="flashcardFront" id="flashFront"></div>
 
-        </p>
+                    <div class="flashcardBack" id="flashBack"></div>
 
-        <p id="footerCount">
+                </div>
 
-        </p>
+            </div>
 
-    </footer>
+        </div>
 
-    <!-- Dictionary Data -->
+        <div class="flashcardControls">
 
-    <script src="wineTerms.js"></script>
+            <button id="prevCard">Previous</button>
 
-    <!-- Site Logic -->
+            <button id="flipCard">Flip</button>
 
-    <script src="script.js"></script>
+            <button id="nextCard">Next</button>
+
+        </div>
+
+        <p id="cardCounter"></p>
+
+    </section>
+
+</main>
+
+<button id="topButton">↑</button>
+
+<footer>
+
+    <p>Wine Language App</p>
+
+    <p id="footerCount"></p>
+
+</footer>
+
+<script src="wineTerms.js"></script>
+<script src="script.js"></script>
 
 </body>
 
