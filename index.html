@@ -1,15 +1,18 @@
 <!DOCTYPE html>
+
 <html lang="en">
 
 <head>
 
-    <meta charset="UTF-8">
+```
+<meta charset="UTF-8">
 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <title>Wine Language App</title>
+<title>Wine Language App</title>
 
-    <link rel="stylesheet" href="styles.css">
+<link rel="stylesheet" href="styles.css">
+```
 
 </head>
 
@@ -17,133 +20,119 @@
 
 <header>
 
-    <div class="headerContent">
+```
+<div class="headerContent">
 
-        <h1>Wine Language App</h1>
+    <h1>Wine Language App</h1>
 
-        <p>Learn wine terminology in English, Spanish, and French</p>
+    <p>Learn wine terminology in English, Spanish, and French</p>
 
-    </div>
+</div>
+```
 
 </header>
 
 <main>
 
-    <!-- Tabs -->
+```
+<!-- Tabs -->
 
-    <div class="tabBar">
+<div class="tabBar">
 
-        <button id="dictionaryTab" class="activeTab">Dictionary</button>
+    <button id="dictionaryTab" class="activeTab">Dictionary</button>
 
-        <button id="flashcardTab">Flashcards</button>
+    <button id="flashcardTab">Flashcards</button>
+
+</div>
+
+<!-- Dictionary Mode -->
+
+<section id="dictionaryMode">
+
+    <div class="searchCard">
+
+        <h2>Search Terms</h2>
+
+        <input id="searchInput" type="text" placeholder="Search all languages">
+
+        <button id="clearButton">Clear</button>
+
+        <p id="resultCount"></p>
 
     </div>
 
-    <!-- Dictionary Mode -->
+    <!-- Search Results -->
 
-    <section id="dictionaryMode">
+    <section id="resultsSection" class="tableCard">
 
-        <div class="searchCard">
+        <h2>Search Results</h2>
 
-            <h2>Search Terms</h2>
+        <table>
 
-            <input id="searchInput" type="text" placeholder="Search all languages">
+            <thead>
 
-            <button id="clearButton">Clear</button>
+                <tr>
+                    <th>English</th>
+                    <th>Spanish</th>
+                    <th>French</th>
+                </tr>
 
-            <p id="resultCount"></p>
+            </thead>
 
-        </div>
+            <tbody id="resultsBody"></tbody>
 
-        <section id="resultsSection" class="tableCard">
+        </table>
 
-            <h2>Search Results</h2>
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>English</th>
-
-                        <th>Spanish</th>
-
-                        <th>French</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="resultsBody"></tbody>
-
-            </table>
-
-            <p id="noResults">No matches found</p>
-
-        </section>
-
-        <section class="tableCard">
-
-            <h2>All Terms</h2>
-
-            <table>
-
-                <thead>
-
-                    <tr>
-
-                        <th>English</th>
-
-                        <th>Spanish</th>
-
-                        <th>French</th>
-
-                    </tr>
-
-                </thead>
-
-                <tbody id="dictionaryBody"></tbody>
-
-            </table>
-
-        </section>
+        <p id="noResults">No matches found</p>
 
     </section>
 
-    <!-- Flashcard Mode -->
+    <!-- Grouped Dictionary -->
 
-    <section id="flashcardMode" style="display:none;">
+    <section class="tableCard">
 
-        <div class="flashcardWrapper">
+        <h2>All Terms</h2>
 
-            <div id="flashcard" class="flashcard">
+        <div id="dictionaryBody"></div>
 
-                <div class="flashcardInner">
+    </section>
 
-                    <div class="flashcardFront" id="flashFront"></div>
+</section>
 
-                    <div class="flashcardBack" id="flashBack"></div>
+<!-- Flashcard Mode -->
 
-                </div>
+<section id="flashcardMode" style="display:none;">
+
+    <div class="flashcardWrapper">
+
+        <div id="flashcard" class="flashcard">
+
+            <div class="flashcardInner">
+
+                <div class="flashcardFront" id="flashFront"></div>
+
+                <div class="flashcardBack" id="flashBack"></div>
 
             </div>
 
         </div>
 
-        <div class="flashcardControls">
+    </div>
 
-            <button id="prevCard">Previous</button>
+    <div class="flashcardControls">
 
-            <button id="flipCard">Flip</button>
+        <button id="prevCard">Previous</button>
 
-            <button id="nextCard">Next</button>
+        <button id="flipCard">Flip</button>
 
-        </div>
+        <button id="nextCard">Next</button>
 
-        <p id="cardCounter"></p>
+    </div>
 
-    </section>
+    <p id="cardCounter"></p>
+
+</section>
+```
 
 </main>
 
@@ -151,13 +140,16 @@
 
 <footer>
 
-    <p>Wine Language App</p>
+```
+<p>Wine Language App</p>
 
-    <p id="footerCount"></p>
+<p id="footerCount"></p>
+```
 
 </footer>
 
 <script src="wineTerms.js"></script>
+
 <script src="script.js"></script>
 
 </body>

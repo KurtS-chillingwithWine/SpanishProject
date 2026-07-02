@@ -45,9 +45,11 @@ let index = 0;
 
 function init() {
 
-    buildTable(wineTerms, dictionaryBody);
+    buildGroupedDictionary();
 
     footerCount.textContent = `Total terms: ${wineTerms.length}`;
+
+    resultsSection.style.display = "none";
 
     loadCard();
 
@@ -74,6 +76,56 @@ function buildTable(data, container) {
         `;
 
         container.appendChild(row);
+
+    });
+
+}
+
+function buildGroupedDictionary() {
+
+    dictionaryBody.innerHTML = "";
+
+    const categories = [
+        ...new Set(wineTerms.map(t => t.category))
+    ];
+
+    categories.forEach(category => {
+
+        const section = document.createElement("div");
+
+        section.className = "categorySection";
+
+        const terms = wineTerms.filter(
+            t => t.category === category
+        );
+
+        section.innerHTML = `
+            <h3 class="categoryHeading">${category}</h3>
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>English</th>
+                        <th>Spanish</th>
+                        <th>French</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    ${terms.map(t => `
+                        <tr>
+                            <td>${t.english}</td>
+                            <td>${t.spanish}</td>
+                            <td>${t.french}</td>
+                        </tr>
+                    `).join("")}
+                </tbody>
+
+            </table>
+        `;
+
+        dictionaryBody.appendChild(section);
 
     });
 
